@@ -1,9 +1,5 @@
 # OmniAuth ESIA
 
-[![Build Status][travis_badge]][travis]
-[![Gem Version][rubygems_badge]][rubygems]
-[![Code Climate][codeclimate_badge]][codeclimate]
-
 This is the unofficial OAuth2 Strategy for [OmniAuth](https://github.com/intridea/omniauth) authenticating to 
 Russian government authentication system for persons (ESIA). 
 
