@@ -8,7 +8,8 @@ use Rack::Session::Cookie
 
 use OmniAuth::Builder do
   provider :esia_openid, ENV['ESIA_CLIENT'], File.read(ENV['ESIA_CRT']), File.read(ENV['ESIA_KEY']), {
-      scope: 'email fullname',
+      scope: 'openid fullname',
+      ctts: false,
       client_options: {
           site: 'https://esia-portal1.test.gosuslugi.ru'.freeze,
           authorize_url: 'aas/oauth2/ac'.freeze,

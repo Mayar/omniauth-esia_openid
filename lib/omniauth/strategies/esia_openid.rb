@@ -12,7 +12,8 @@ module OmniAuth
       option :secret_key, nil
       option :redirect_url, nil
       option :access_type, 'online'.freeze
-      option :scope, 'fullname email'.freeze
+      option :scope, 'openid fullname'.freeze
+      option :ctts, false
       option :client_options, {
           site: 'https://esia.gosuslugi.ru'.freeze,
           authorize_url: 'aas/oauth2/ac'.freeze,
@@ -92,12 +93,14 @@ module OmniAuth
         main.delete('stateFacts')
         main.delete('eTag')
         @raw_info.merge!(main)
-        ctts = (access_token.get("/rs/prns/#{uid}/ctts?embed=(elements)").parsed || {})
-        log :debug, "raw_info, ctts info = #{ctts}"
-        ctts.fetch('elements', {}).each do |el|
-          el.delete('stateFacts')
-          el.delete('eTag')
-          @raw_info[el.delete('type')] = el
+        if options.ctts
+          ctts = (access_token.get("/rs/prns/#{uid}/ctts?embed=(elements)").parsed || {})
+          log :debug, "raw_info, ctts info = #{ctts}"
+          ctts.fetch('elements', {}).each do |el|
+            el.delete('stateFacts')
+            el.delete('eTag')
+            @raw_info[el.delete('type')] = el
+          end
         end
         @raw_info
       end

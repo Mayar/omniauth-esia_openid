@@ -22,7 +22,8 @@ gem 'omniauth-esia_openid'
 ```ruby
 use OmniAuth::Builder do
   provider :esia_openid, ENV['ESIA_CLIENT'], File.read(ENV['ESIA_CRT_PATH']), File.read(ENV['ESIA_KEY_PATH']), {
-      scope: 'mobile fullname email', # Только "Данные о физическом лице" и "Контактные данные"
+      scope: 'openid mobile fullname email', # Только "Данные о физическом лице" и "Контактные данные"
+      ctts: true, #Для получения контактов физического лица.
       client_options: { # Меняем ссылки на тестовые 
           site: 'https://esia-portal1.test.gosuslugi.ru',
           authorize_url: 'aas/oauth2/ac',
@@ -31,3 +32,6 @@ use OmniAuth::Builder do
   }
 end
 ```
+ctts == Сведения о контактах физического лица. Запрашиваются отдельным запросом. Включать только 
+если у вас есть соответствующее разрешение. 
+На данный момент (17.08.2017) для коммерческих организаций доступны только openid и fullname. Соответвенно: ctts: афдыу 
